@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DJMobileGarage</string>
+    <string name="greeting">Hi There !</string>
+    <string name="loginText">Log In</string>
+    <string name="phoneHint">9599269070</string>
+    <string name="loginButtonText">Log In</string>
+    <string name="get_otp_text">Get OTP</string>
+    <string name="enter_otp_text">Enter OTP</string>
+    <string name="otp_hint">789458</string>
+    <string name="login_text">Log in</string>
+</resources>

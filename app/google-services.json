@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "559851700015",
+    "firebase_url": "https://djmobilegarage.firebaseio.com",
+    "project_id": "djmobilegarage",
+    "storage_bucket": "djmobilegarage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559851700015:android:cbc5d30bead371d40febda",
+        "android_client_info": {
+          "package_name": "com.example.djmobilegarage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559851700015-63i240suu8fq80sv9il1g2st1p7m8nuq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.djmobilegarage",
+            "certificate_hash": "ac4562448ba01de9ac42340cb710e094bbbefb90"
+          }
+        },
+        {
+          "client_id": "559851700015-vatveqidv7b41vbkes7ub4jisjksaff0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARMa3O6Vm4NrRtbc6qn-KdpAzLX71Pl04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559851700015-vatveqidv7b41vbkes7ub4jisjksaff0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
