@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.CreateProductFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/camera_button"
+                    android:layout_width="0dp"
+                    android:layout_height="163dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/brand_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/round_rec_background"
+                    android:hint="@string/brand_text"
+                    android:padding="15dp"
+                    android:textColor="#fff"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/camera_button" />
+
+                <EditText
+                    android:id="@+id/name_model_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/round_rec_background"
+                    android:ems="10"
+                    android:hint="@string/name_model_etc_text"
+                    android:inputType="textPersonName"
+                    android:padding="15dp"
+                    android:textColor="#fff"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    app:layout_constraintEnd_toEndOf="@+id/brand_field"
+                    app:layout_constraintStart_toStartOf="@+id/brand_field"
+                    app:layout_constraintTop_toBottomOf="@+id/brand_field" />
+
+                <EditText
+                    android:id="@+id/mrp_input_field"
+                    android:layout_width="0dp"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/ic_rupee"
+                    android:maxLength="5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/round_rec_background"
+                    android:ems="10"
+                    android:hint="@string/mrp_text"
+                    android:inputType="numberDecimal"
+                    android:padding="15dp"
+                    android:textColor="#fff"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    app:layout_constraintEnd_toEndOf="@+id/name_model_field"
+                    app:layout_constraintStart_toStartOf="@+id/name_model_field"
+                    app:layout_constraintTop_toBottomOf="@+id/name_model_field" />
+
+                <EditText
+                    android:id="@+id/off_input_field"
+                    android:drawableRight="@drawable/ic_discount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_rec_background"
+                    android:ems="10"
+                    android:hint="@string/off_optional_text"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:inputType="number"
+                    android:padding="15dp"
+                    android:textColor="#fff"
+                    app:layout_constraintEnd_toEndOf="@+id/mrp_input_field"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/mrp_input_field"
+                    app:layout_constraintTop_toBottomOf="@+id/discount_price_text_view" />
+
+                <Button
+                    android:id="@+id/save_product_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/round_rec_background"
+                    android:padding="15dp"
+                    android:text="@string/save_product_text"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/off_input_field"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="@+id/off_input_field"
+                    app:layout_constraintTop_toBottomOf="@+id/off_input_field"
+                    app:layout_constraintVertical_bias="0.181"
+                    tools:text="Save Product" />
+
+                <TextView
+                    android:id="@+id/discount_price_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Price after discount "
+                    app:layout_constraintStart_toStartOf="@+id/mrp_input_field"
+                    app:layout_constraintTop_toBottomOf="@+id/mrp_input_field" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

@@ -8,4 +8,15 @@
     <string name="enter_otp_text">Enter OTP</string>
     <string name="otp_hint">789458</string>
     <string name="login_text">Log in</string>
+    <string name="search_menu_text">Search</string>
+    <string name="schedule_for_pickup_text">Schedule</string>
+    <string name="account_menu_text">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_product_text">Save Product</string>
+    <string name="off_optional_text">% Discount (Optional)</string>
+    <string name="mrp_text">MRP</string>
+    <string name="name_model_etc_text">Name / Model / Etc</string>
+    <string name="brand_text">Brand</string>
 </resources>

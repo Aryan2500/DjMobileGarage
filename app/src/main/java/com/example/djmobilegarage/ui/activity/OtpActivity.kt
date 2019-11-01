@@ -1,7 +1,8 @@
-package com.example.djmobilegarage
+package com.example.djmobilegarage.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.djmobilegarage.R
 
 class OtpActivity : AppCompatActivity() {
 
