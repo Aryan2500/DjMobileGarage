@@ -13,21 +13,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.djmobilegarage.R
+import com.example.djmobilegarage.modles.Product
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_create_product.*
 import kotlinx.android.synthetic.main.fragment_create_product.view.*
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
 
 
 class CreateProductFragment : Fragment() {
 
+    private var newPrice = 0.0
+    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val storageReference = FirebaseStorage.getInstance().reference
     private var imageUri: Uri? = null
     private val dialoagMenuOption = arrayOf("Camera", "Gallery")
     private val GALLERY_REQUEST = 2
+    var mrp: Double = 0.0
+    var discount: Double = 0.0
+    var inStock = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +48,10 @@ class CreateProductFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         view.camera_button.setOnClickListener {
 
             //Creating Dialoage OPtions
+
             val alertDialog = AlertDialog.Builder(this@CreateProductFragment.context!!)
             alertDialog.setTitle("Choose or Capture Photo")
             alertDialog.setItems(dialoagMenuOption) { _, which ->
@@ -57,8 +66,42 @@ class CreateProductFragment : Fragment() {
             }
             alertDialog.show()
         }
-        var mrp = 0.0
-        var discount: Double
+
+        save_product_btn.setOnClickListener {
+            if (!inStock_check_box.isChecked) {
+                inStock = false
+            }
+            if (brand_field.text.isEmpty() || mrp_input_field.text.isEmpty() || name_model_field.text.isEmpty()) {
+                //Validating DAta
+                Snackbar.make(it, "Fill Required Fields", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else {
+                //Saving DAta
+                Snackbar.make(it, "DAta SAved", Snackbar.LENGTH_SHORT).show()
+
+                if (imageUri == null) {
+              //If  imageURi is Empty saveProduct() from uploadPost() will never be called thats why we are calling saveProdcut() directly from here
+                    val defaultImgUrl =
+                        "https://firebasestorage.googleapis.com/v0/b/djmobilegarage.appspot.com/o/images%2Fnot_available.jpg?alt=media&token=9bde9c7f-909c-442d-aef8-38e7260028ce"
+                    saveProductDetails(
+                       defaultImgUrl,
+                        brand_field.text.toString(),
+                        name_model_field.text.toString(),
+                        mrp_input_field.text.toString(),
+                        off_input_field.text.toString(),
+                        newPrice.toString(),
+                        inStock
+                    )
+                    Log.d("hello" , "Hello")
+                }else{
+                     uploadPost(imageUri!!)
+                    Log.d("bye" , "Bye")
+                }
+
+
+            }
+        }
+
         view.off_input_field.isEnabled = false
         view.mrp_input_field.addTextChangedListener(
             object : TextWatcher {
@@ -85,14 +128,14 @@ class CreateProductFragment : Fragment() {
 
                     if (s!!.isNotEmpty()) {
                         mrp = s.toString().toDouble()
-                        view.discount_price_text_view.text = "Price after Discount $mrp"
+                        view.discount_price_text_view.text = "Price after discount $mrp"
                         view.off_input_field.isEnabled = true
-                        Toast.makeText(this@CreateProductFragment.context, s, Toast.LENGTH_LONG)
-                            .show()
+//                        Toast.makeText(this@CreateProductFragment.context, s, Toast.LENGTH_LONG)
+//                            .show()
                     } else {
                         view.off_input_field.setText("0")
                         view.off_input_field.isEnabled = false
-                        view.discount_price_text_view.text = "Price after Discount 0"
+                        view.discount_price_text_view.text = "Price after discount 0"
                     }
 
                 }
@@ -123,7 +166,7 @@ class CreateProductFragment : Fragment() {
 
                     if (s!!.isNotEmpty()) {
                         discount = s.toString().toDouble()
-                        val newPrice = mrp * discount / 100
+                        newPrice = mrp - (mrp * discount / 100)
                         view.discount_price_text_view.text = "Price after Discount $newPrice"
                     } else {
                         view.discount_price_text_view.text = "Price after Discount 0"
@@ -145,7 +188,6 @@ class CreateProductFragment : Fragment() {
 
                 val imgStream: InputStream =
                     activity?.contentResolver?.openInputStream(selectedImageUri)!!
-                Log.d("path2", "$imgStream")
 
                 camera_button.setImageBitmap(BitmapFactory.decodeStream(imgStream))
 
@@ -163,6 +205,47 @@ class CreateProductFragment : Fragment() {
             it.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(it, "Select Photo"), GALLERY_REQUEST)
         }
+    }
+
+    private fun uploadPost(uri: Uri) {
+        val imgId = UUID.randomUUID().toString()
+        storageReference.child("images/$imgId").putFile(uri).addOnCompleteListener {
+            if (it.isSuccessful) {
+                storageReference.child("images/$imgId")
+                    .downloadUrl.addOnCompleteListener { imgURL ->
+
+                    saveProductDetails(
+                        imgURL.result.toString(),
+                        brand_field.text.toString(),
+                        name_model_field.text.toString(),
+                        mrp_input_field.text.toString(),
+                        off_input_field.text.toString(),
+                        newPrice.toString(),
+                        inStock
+
+
+                    )
+
+                }
+
+            }
+        }
+
+
+    }
+
+
+    private fun saveProductDetails(
+        imgUrl: String  ,
+        brand: String,
+        model: String,
+        mrp: String,
+        discount: String,
+        price_after_discount: String,
+        inStock: Boolean
+    ) {
+        databaseReference.child("products").push()
+            .setValue(Product(imgUrl, brand, model, inStock, mrp, price_after_discount, discount))
     }
 
 }

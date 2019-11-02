@@ -1,11 +1,12 @@
 package com.example.djmobilegarage.modles
 
 data class Product(
+
+    val picture: String,
     val brand: String,
-    val name: String,
+    val name_model: String,
     val inStock: Boolean,
-    val real_price: String,
-    val off: String,
-    val price_after_off:String ,
-    val picture: String
+    val mrp: String,
+    val price_after_discount:String ,
+    val discount: String
 )

@@ -13,10 +13,10 @@
     <string name="account_menu_text">Account</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="save_product_text">Save Product</string>
     <string name="off_optional_text">% Discount (Optional)</string>
-    <string name="mrp_text">MRP</string>
-    <string name="name_model_etc_text">Name / Model / Etc</string>
-    <string name="brand_text">Brand</string>
+    <string name="mrp_text">MRP (required)</string>
+    <string name="name_model_etc_text">Name / Model / Etc (required)</string>
+    <string name="brand_text">Brand (required)</string>
 </resources>

@@ -28,7 +28,7 @@
                     android:layout_marginEnd="24dp"
                     android:padding="5dp"
                     android:scaleType="fitCenter"
-                    android:src="@android:drawable/ic_menu_camera"
+                    android:src="@drawable/ic_photo_camera"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -86,21 +86,22 @@
 
                 <EditText
                     android:id="@+id/off_input_field"
-                    android:drawableRight="@drawable/ic_discount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_rec_background"
+                    android:drawableRight="@drawable/ic_discount"
                     android:ems="10"
+                    android:maxLength="2"
                     android:hint="@string/off_optional_text"
-                    android:textCursorDrawable="@drawable/cursor_color"
                     android:inputType="number"
                     android:padding="15dp"
                     android:textColor="#fff"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     app:layout_constraintEnd_toEndOf="@+id/mrp_input_field"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/mrp_input_field"
-                    app:layout_constraintTop_toBottomOf="@+id/discount_price_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/inStock_check_box" />
 
                 <Button
                     android:id="@+id/save_product_btn"
@@ -127,8 +128,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:textColor="#fff"
                     android:text="Price after discount "
+                    app:layout_constraintBottom_toBottomOf="@+id/inStock_check_box"
                     app:layout_constraintStart_toStartOf="@+id/mrp_input_field"
+                    app:layout_constraintTop_toBottomOf="@+id/mrp_input_field"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <CheckBox
+                    android:id="@+id/inStock_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="true"
+                    android:text="Available"
+                    android:textColor="#fff"
+                    app:buttonTint="@color/appThemeColor"
+                    app:layout_constraintEnd_toEndOf="@+id/mrp_input_field"
                     app:layout_constraintTop_toBottomOf="@+id/mrp_input_field" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
