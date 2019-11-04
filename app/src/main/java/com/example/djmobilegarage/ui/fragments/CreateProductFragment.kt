@@ -29,14 +29,14 @@ import java.util.*
 
 class CreateProductFragment : Fragment() {
 
-    private var newPrice = 0.0
+    private var newPrice :Double = 0.0
     private val databaseReference = FirebaseDatabase.getInstance().reference
     private val storageReference = FirebaseStorage.getInstance().reference
     private var imageUri: Uri? = null
     private val dialoagMenuOption = arrayOf("Camera", "Gallery")
     private val GALLERY_REQUEST = 2
     var mrp: Double = 0.0
-    var discount: Double = 0.0
+    var discount: Int = 0
     var inStock = true
 
     override fun onCreateView(
@@ -80,22 +80,22 @@ class CreateProductFragment : Fragment() {
                 Snackbar.make(it, "DAta SAved", Snackbar.LENGTH_SHORT).show()
 
                 if (imageUri == null) {
-              //If  imageURi is Empty saveProduct() from uploadPost() will never be called thats why we are calling saveProdcut() directly from here
+                    //If  imageURi is Empty saveProduct() from uploadPost() will never be called thats why we are calling saveProdcut() directly from here
                     val defaultImgUrl =
                         "https://firebasestorage.googleapis.com/v0/b/djmobilegarage.appspot.com/o/images%2Fnot_available.jpg?alt=media&token=9bde9c7f-909c-442d-aef8-38e7260028ce"
                     saveProductDetails(
-                       defaultImgUrl,
+                        defaultImgUrl,
                         brand_field.text.toString(),
                         name_model_field.text.toString(),
                         mrp_input_field.text.toString(),
-                        off_input_field.text.toString(),
+                        discount.toString(),
                         newPrice.toString(),
                         inStock
                     )
-                    Log.d("hello" , "Hello")
-                }else{
-                     uploadPost(imageUri!!)
-                    Log.d("bye" , "Bye")
+                    Log.d("hello", "Hello")
+                } else {
+                    uploadPost(imageUri!!)
+                    Log.d("bye", "Bye")
                 }
 
 
@@ -126,16 +126,23 @@ class CreateProductFragment : Fragment() {
                     count: Int
                 ) {
 
-                    if (s!!.isNotEmpty()) {
+                    if (s!!.isNotEmpty() && s.toString().toDouble() > 1) {
                         mrp = s.toString().toDouble()
-                        view.discount_price_text_view.text = "Price after discount $mrp"
-                        view.off_input_field.isEnabled = true
+
+                        if (view.off_input_field.text.isNotEmpty() && view.off_input_field.text.toString().toInt() > 0) {
+                            discount = view.off_input_field.text.toString().toInt()
+                            newPrice = mrp - (mrp * discount / 100)
+                            view.discount_price_text_view.text = "Price after discount $newPrice"
+                        } else {
+                            view.discount_price_text_view.text = "Price without discount $mrp"
+                            view.off_input_field.isEnabled = true
+                        }
 //                        Toast.makeText(this@CreateProductFragment.context, s, Toast.LENGTH_LONG)
 //                            .show()
                     } else {
-                        view.off_input_field.setText("0")
+                        view.off_input_field.setText("")
                         view.off_input_field.isEnabled = false
-                        view.discount_price_text_view.text = "Price after discount 0"
+                        view.discount_price_text_view.text = "Price after discount $discount"
                     }
 
                 }
@@ -144,9 +151,7 @@ class CreateProductFragment : Fragment() {
 
         view.off_input_field.addTextChangedListener(
             object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-
-                }
+                override fun afterTextChanged(s: Editable?) {}
 
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -154,7 +159,6 @@ class CreateProductFragment : Fragment() {
                     count: Int,
                     after: Int
                 ) {
-
                 }
 
                 override fun onTextChanged(
@@ -165,11 +169,12 @@ class CreateProductFragment : Fragment() {
                 ) {
 
                     if (s!!.isNotEmpty()) {
-                        discount = s.toString().toDouble()
+                        discount = s.toString().toInt()
                         newPrice = mrp - (mrp * discount / 100)
                         view.discount_price_text_view.text = "Price after Discount $newPrice"
                     } else {
-                        view.discount_price_text_view.text = "Price after Discount 0"
+                        discount = 0
+                        view.discount_price_text_view.text = "Price after Discount $discount"
                     }
 
                 }
@@ -219,7 +224,7 @@ class CreateProductFragment : Fragment() {
                         brand_field.text.toString(),
                         name_model_field.text.toString(),
                         mrp_input_field.text.toString(),
-                        off_input_field.text.toString(),
+                        discount.toString(),
                         newPrice.toString(),
                         inStock
 
@@ -236,7 +241,7 @@ class CreateProductFragment : Fragment() {
 
 
     private fun saveProductDetails(
-        imgUrl: String  ,
+        imgUrl: String,
         brand: String,
         model: String,
         mrp: String,

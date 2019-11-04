@@ -9,4 +9,6 @@ data class Product(
     val mrp: String,
     val price_after_discount:String ,
     val discount: String
-)
+){
+    constructor():this(picture="" ,brand = "" , model_name = "" , inStock = true , mrp = "",price_after_discount = "",discount = "" )
+}
